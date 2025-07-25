@@ -3,24 +3,78 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --font-inter-sans: Inter, sans-serif;
+  --light-grey: #f6f6f6;
+  --dark-grey: #747474;
+  --blue: #1b466b;
+  --blue-light: #265680;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter-sans);
+  --color-light-grey: var(--light-grey);
+  --color-dark-grey: var(--dark-grey);
+  --color-primary: var(--blue);
+  --color-primary-light: var(--blue-light);
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
-}
+} */
 
 body {
-  background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter-sans);
+}
+
+/* Tailwind-based styles */
+.table-wrapper {
+  @apply bg-white; /* Slight gray background for the table */
+}
+
+.table-grid {
+  @apply grid grid-cols-3; /* 3 columns with 1px gap between cells */
+}
+
+.entry {
+  @apply p-4 text-sm border border-neutral-300;
+}
+
+.entry-header {
+  @apply font-semibold text-dark-grey; /* Style for the header row */
+}
+
+.entry-body {
+  @apply bg-gray-50; /* Light background for body rows */
+}
+
+@media (max-width: 768px) {
+  table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  th,
+  td {
+    display: block;
+    text-align: right;
+  }
+
+  th {
+    background-color: #f9f9f9;
+  }
+}
+.scrollbar-hide {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
 }

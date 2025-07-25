@@ -1,103 +1,152 @@
-import Image from "next/image";
+"use client";
+
+import { useState } from "react";
+import { ToggleSlider } from "@/components/ToggleSlider";
+import { Card } from "@/components/Card";
+import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const headers = ["Tool", "Amount", "Renews In"];
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+  const rows = [
+    { tool: "Notion", amount: "$8/mo", renewsIn: "5 Days", status: "red" },
+    { tool: "Figma", amount: "$15/mo", renewsIn: "12 Days", status: "amber" },
+    { tool: "Dropbox", amount: "$12/mo", renewsIn: "18 Days", status: "green" },
+  ];
+
+  const [showActive, setShowActive] = useState(false);
+  const [isYearly, setIsYearly] = useState(false);
+
+  const toggleActive = () => {
+    setShowActive(!showActive);
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 40 }}
+    >
+      <h1 className="mb-6 font-semibold text-3xl">Spending Overview</h1>
+      <div className="flex gap-2 max-w-6xl">
+        <Card
+          title="All Subscriptions"
+          monthly="$144/mo"
+          yearly="$1728/yr"
+          text="12 Active"
+          showActive={showActive}
+          isYearly={isYearly}
+        />
+        <Card
+          title="Entertainment"
+          monthly="$44/mo"
+          yearly="$528/yr"
+          text="3 Active"
+          showActive={showActive}
+          isYearly={isYearly}
+        />
+        <Card
+          title="Productivity"
+          monthly="$100/mo"
+          yearly="$1200/yr"
+          text="9 Active"
+          showActive={showActive}
+          isYearly={isYearly}
+        />
+      </div>
+
+      <div className="my-6">
+        <div className="flex flex-col gap-2 w-full max-w-6xl">
+          <div className="flex justify-between w-full items-center">
+            Monthly/Yearly
+            <ToggleSlider
+              defaultChecked={false}
+              onToggle={() => setIsYearly((prev) => !prev)}
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+          </div>
+          <div className="flex justify-between w-full items-center">
+            Show Active
+            <ToggleSlider defaultChecked={false} onToggle={toggleActive} />
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+        <h1 className="mb-6 mt-16 font-semibold text-3xl">Upcoming Renewals</h1>
+
+        <div className="inline-block w-full max-w-6xl text-sm overflow-hidden rounded-lg border border-neutral-400">
+          <table className="min-w-full table-auto">
+            <thead className="bg-gray-[#FCFCFC]">
+              <tr>
+                {headers.map((header, i) => (
+                  <th
+                    key={i}
+                    className="px-5 py-3 text-sm border-b border-neutral-400 text-neutral-950 font-semibold text-left"
+                  >
+                    {header}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((row, i) => {
+                const isLast = i === rows.length - 1;
+                const cellClass = `px-5 py-3 transition-all duration-75 ${
+                  isLast ? "" : "border-b border-neutral-400"
+                } text-left text-neutral-900`;
+
+                return (
+                  <tr
+                    key={i}
+                    className="hover:bg-[#FFFFFF] hover:cursor-pointer transition-all duration-75 hover:text-primary-light group"
+                  >
+                    <td
+                      className={`${cellClass} w-1/3 group-hover:font-semibold`}
+                    >
+                      {row.tool}
+                    </td>
+                    <td
+                      className={`${cellClass} w-1/3 group-hover:font-semibold`}
+                    >
+                      {row.amount}
+                    </td>
+                    <td
+                      className={`${cellClass} w-full group-hover:font-semibold flex items-center justify-between`}
+                    >
+                      {row.renewsIn}
+                      <span
+                        className={`ml-2 w-1 h-1 rounded-full ${
+                          row.status === "red"
+                            ? "bg-red-500"
+                            : row.status === "amber"
+                            ? "bg-amber-500"
+                            : "bg-green-400"
+                        }`}
+                      />
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+        <div className="mt-4">
+          <Link className="underline hover:no-underline" href="/subscriptions">
+            View All Subscriptions
+          </Link>
+        </div>
+        <h1 className="mb-6 mt-16 font-semibold text-3xl">View by Category</h1>
+        <div className="flex gap-2">
+          <Link href="/subscriptions/productivity">
+            <div className="p-4  text-primary rounded-md hover:bg-primary hover:text-white border border-primary transition-all duration-200">
+              Productivity
+            </div>
+          </Link>
+          <Link href="/subscriptions/entertainment">
+            <div className="p-4 text-purple-900 rounded-md hover:bg-purple-900 border border-purple-900 transition-all duration-200 hover:text-white">
+              Entertainment
+            </div>
+          </Link>
+        </div>
+      </div>
+    </motion.div>
   );
 }
